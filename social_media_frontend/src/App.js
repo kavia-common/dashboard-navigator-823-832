@@ -7,17 +7,7 @@ import Header from "./components/layout/Header";
 import NotificationsPanel from "./components/layout/NotificationsPanel";
 
 import Dashboard from "./pages/Dashboard";
-
-// Lightweight placeholder pages to demonstrate routing expansion
-
-function ProfilesPage() {
-  return (
-    <div style={{ padding: "16px" }}>
-      <h2>Profiles</h2>
-      <p>Manage and view user profiles here.</p>
-    </div>
-  );
-}
+import Profile from "./pages/Profile";
 
 function ModerationPage() {
   return (
@@ -103,7 +93,7 @@ export default function App() {
           <main style={layoutStyles.mainArea} role="main">
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/profiles" element={<ProfilesPage />} />
+              <Route path="/profiles" element={<Profile />} />
               <Route path="/moderation" element={<ModerationPage />} />
               <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />

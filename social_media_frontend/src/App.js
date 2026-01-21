@@ -6,15 +6,9 @@ import Sidebar from "./components/layout/Sidebar";
 import Header from "./components/layout/Header";
 import NotificationsPanel from "./components/layout/NotificationsPanel";
 
+import Dashboard from "./pages/Dashboard";
+
 // Lightweight placeholder pages to demonstrate routing expansion
-function DashboardHome() {
-  return (
-    <div style={{ padding: "16px" }}>
-      <h2>Dashboard</h2>
-      <p>Welcome to your social media analytics dashboard.</p>
-    </div>
-  );
-}
 
 function ProfilesPage() {
   return (
@@ -108,7 +102,7 @@ export default function App() {
 
           <main style={layoutStyles.mainArea} role="main">
             <Routes>
-              <Route path="/" element={<DashboardHome />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/profiles" element={<ProfilesPage />} />
               <Route path="/moderation" element={<ModerationPage />} />
               <Route path="/admin" element={<AdminPage />} />

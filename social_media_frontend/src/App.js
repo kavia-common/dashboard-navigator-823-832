@@ -34,6 +34,15 @@ function ModerationPage() {
   );
 }
 
+function AdminPage() {
+  return (
+    <div style={{ padding: "16px" }}>
+      <h2>Admin</h2>
+      <p>Admin configuration and tools. (To be wired with auth guard)</p>
+    </div>
+  );
+}
+
 // PUBLIC_INTERFACE
 export default function App() {
   /** App entry that wires BrowserRouter and the main layout skeleton. */
@@ -102,6 +111,7 @@ export default function App() {
               <Route path="/" element={<DashboardHome />} />
               <Route path="/profiles" element={<ProfilesPage />} />
               <Route path="/moderation" element={<ModerationPage />} />
+              <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

@@ -1,5 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import UserActivationModal from "../admin/UserActivationModal";
+import RoleChangeModal from "../admin/RoleChangeModal";
+import PostModerationModal from "../admin/PostModerationModal";
 
 /**
  * Header component providing title area, global search, user avatar menu,
@@ -11,6 +14,9 @@ export default function Header() {
   const { user, logout } = useAuth?.() || { user: null, logout: () => {} };
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
+  const [actionModal, setActionModal] = useState(null); // "activation" | "role" | "moderation" | null
+  const [contextUser] = useState({ id: "u-101", name: "John Admin", username: "john", active: true, role: "admin" });
+  const [contextPost] = useState({ id: "p-204", title: "Example flagged post" });
 
   const isAdmin = useMemo(() => {
     if (!user) return false;
@@ -168,7 +174,7 @@ export default function Header() {
         </div>
       )}
 
-      {/* Lightweight Admin Modal scaffold to be wired to real admin actions */}
+      {/* Admin Modal entry: choose a specific admin action */}
       {showAdminModal && (
         <div
           aria-modal="true"
@@ -209,21 +215,30 @@ export default function Header() {
             <div style={{ padding: 16, display: "grid", gap: 10 }}>
               <button
                 style={primaryBtn}
-                onClick={() => alert("Open moderation queue (to be wired)")}
+                onClick={() => {
+                  setActionModal("activation");
+                  setShowAdminModal(false);
+                }}
               >
-                Review Moderation Queue
+                Toggle user activation
               </button>
               <button
                 style={{ ...primaryBtn, backgroundColor: "#10B981" }}
-                onClick={() => alert("Open feature flags (to be wired)")}
+                onClick={() => {
+                  setActionModal("role");
+                  setShowAdminModal(false);
+                }}
               >
-                Feature Flags
+                Change user role
               </button>
               <button
                 style={{ ...primaryBtn, backgroundColor: "#F59E0B" }}
-                onClick={() => alert("Run maintenance (to be wired)")}
+                onClick={() => {
+                  setActionModal("moderation");
+                  setShowAdminModal(false);
+                }}
               >
-                Run Maintenance
+                Moderate post
               </button>
             </div>
             <div
@@ -244,6 +259,29 @@ export default function Header() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Concrete admin action modals */}
+      {actionModal === "activation" && (
+        <UserActivationModal
+          isOpen={true}
+          onClose={() => setActionModal(null)}
+          user={contextUser}
+        />
+      )}
+      {actionModal === "role" && (
+        <RoleChangeModal
+          isOpen={true}
+          onClose={() => setActionModal(null)}
+          user={contextUser}
+        />
+      )}
+      {actionModal === "moderation" && (
+        <PostModerationModal
+          isOpen={true}
+          onClose={() => setActionModal(null)}
+          postItem={contextPost}
+        />
       )}
     </div>
   );
